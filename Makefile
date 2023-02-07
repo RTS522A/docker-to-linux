@@ -24,13 +24,13 @@ alpine: alpine.img
 
 %.dir: %.tar
 	@echo ${COL_GRN}"[Extract $* tar archive]"${COL_END}
-	docker run -it \
+	docker run -i \
 		-v `pwd`:/os:rw \
 		${REPO}/builder bash -c 'mkdir -p /os/$*.dir && tar -C /os/$*.dir --numeric-owner -xf /os/$*.tar'
 
 %.img: builder %.dir
 	@echo ${COL_GRN}"[Create $* disk image]"${COL_END}
-	docker run -it \
+	docker run -i \
 		-v `pwd`:/os:rw \
 		-e DISTR=$* \
 		--privileged \
@@ -46,7 +46,7 @@ builder:
 
 .PHONY:
 builder-interactive:
-	docker run -it \
+	docker run -i \
 		-v `pwd`:/os:rw \
 		--cap-add SYS_ADMIN \
 		${REPO}/builder bash
