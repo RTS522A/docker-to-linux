@@ -1,0 +1,38 @@
+ame: CI
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install qemu-utils extlinux fdisk
+        run: |
+          sudo apt-get update
+          sudo apt-get install qemu-utils docker extlinux fdisk qemu-utils
+      - uses: actions/checkout@v3
+
+      - name: Build image
+        run: |
+          sudo make debian
+          sudo make ubuntu
+          sudo make alpine
+              
+      - name: Convert to vmdk       
+        run: |
+          ls -la
+          qemu-img convert -f qcow2 -O vmdk -o adapter_type=lsilogic,subformat=monolithicFlat alpine.qcow2 alpine.vmdk
+      
+              
+      - name: Tar files
+        run: tar -czf alpine.tar.gz alpine.qcow2 alpine.vmdk alpine-flat.vmdk
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: alpine.tar.gz
+      
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: alpine.tar.gz              
