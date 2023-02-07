@@ -6,10 +6,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install qemu-utils extlinux fdisk docker docker-engine docker.io containerd runc
+      - name: Install qemu-utils extlinux fdisk docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
         run: |
           sudo apt-get update
-          sudo apt-get install qemu-utils extlinux fdisk qemu-utils docker docker-engine docker.io containerd runc
+          sudo apt-get install qemu-utils extlinux fdisk qemu-utils docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
       - uses: actions/checkout@v3
 
       - name: Build image
