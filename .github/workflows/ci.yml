@@ -6,10 +6,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install qemu-utils extlinux fdisk docker
+      - name: Install qemu-utils extlinux fdisk docker docker-engine docker.io containerd runc
         run: |
           sudo apt-get update
-          sudo apt-get install qemu-utils docker extlinux fdisk qemu-utils
+          sudo apt-get install qemu-utils extlinux fdisk qemu-utils docker docker-engine docker.io containerd runc
       - uses: actions/checkout@v3
 
       - name: Build image
