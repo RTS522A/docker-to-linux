@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install qemu-utils extlinux fdisk
+      - name: Install qemu-utils extlinux fdisk docker
         run: |
           sudo apt-get update
           sudo apt-get install qemu-utils docker extlinux fdisk qemu-utils
